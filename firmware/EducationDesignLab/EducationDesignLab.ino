@@ -11,7 +11,6 @@
    ** SCK  - pin 2
 */
 
-
 #if !defined(ARDUINO_ARCH_RP2040)
   #error For RP2040 only
 #endif
@@ -34,12 +33,16 @@
 #include "hardware/pll.h"
 #include "hardware/clocks.h"
 
+#define pathPhrases "phrases/"
+#define pathWords "words/"
+
 #define fileName  "chona.wav"
 
 File f;
 
 // Audio PIN is to match some of the design guide shields. 
 #define AUDIO_PIN 28  // you can change this to whatever you like
+#define AMP_EN 0 //Enable Ampli
 
 #define Button0 10
 #define Button1 11
@@ -60,6 +63,43 @@ uint32_t wav_position = 0;
 
 uint32_t ChunkSize = 0;                 // this is the actual sound data size
 uint8_t* WAV_DATA;
+
+
+void printDirectory(File dir, int numTabs) 
+{
+  while (true) 
+  {
+    File entry =  dir.openNextFile();
+
+    if (! entry) 
+    {
+      // no more files
+      break;
+    }
+    
+    for (uint8_t i = 0; i < numTabs; i++) 
+    {
+      Serial.print('\t');
+    }
+    
+    Serial.print(entry.name());
+    
+    if (entry.isDirectory()) 
+    {
+      Serial.println("/");
+      printDirectory(entry, numTabs + 1);
+    } 
+    else 
+    {
+      // files have sizes, directories do not
+      Serial.print("\t\t");
+      Serial.println(entry.size(), DEC);
+    }
+    
+    entry.close();
+  }
+}
+/**************************************************************************************/
 
 typedef struct  WAV_HEADER
 {
@@ -268,9 +308,7 @@ void readContents() {
           Serial.println("Sound File Data Read ");
           
           int fileSize = 0;
-          //f.seek(SEEK_END);
           fileSize = f.size();
-          //f.seek(SEEK_SET);
           Serial.print("File size is: "); Serial.print(fileSize); Serial.println(" bytes.");
           
           f.close();
@@ -307,8 +345,6 @@ void readContents() {
           pwm_set_gpio_level(AUDIO_PIN, 0);
               
         }
-        //delete [] buffer;
-        //buffer = nullptr;
       }
       
     }
@@ -360,8 +396,11 @@ void setup()
     Serial.println("Initialization failed!");
     return;
   }
-  
   Serial.println("Initialization done.");
+  f = SD.open("/");
+
+  printDirectory(f, 0);
+  
   readContents();
 }
 
