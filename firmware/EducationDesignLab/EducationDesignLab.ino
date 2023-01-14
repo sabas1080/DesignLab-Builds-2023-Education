@@ -41,9 +41,20 @@ File f;
 // Audio PIN is to match some of the design guide shields. 
 #define AUDIO_PIN 28  // you can change this to whatever you like
 
-#define AMP_EN 16 //Enable Ampli
+#define Button0 10
+#define Button1 11
+#define Button2 12
+#define Button3 13
+#define Button4 2
+#define Button5 8
+#define Button6 9
+#define Button7 20
 
-int leds[4] = {10, 25, 26, 8};
+#define VOL 1
+#define REC 3
+
+#define LANG 26
+#define WORD 27
 
 uint32_t wav_position = 0;
 
@@ -309,18 +320,33 @@ void readContents() {
 void setup() 
 {
   set_sys_clock_khz(176000, true);
+  pinMode(LED_BUILTIN, OUTPUT);
+  
+  pinMode(Button0, INPUT_PULLUP);
+  pinMode(Button1, INPUT_PULLUP);
+  pinMode(Button2, INPUT_PULLUP);
+  pinMode(Button3, INPUT_PULLUP);
+  pinMode(Button4, INPUT_PULLUP);
+  pinMode(Button5, INPUT_PULLUP);
+  pinMode(Button6, INPUT_PULLUP);
+  pinMode(Button7, INPUT_PULLUP);
+
+  pinMode(VOL, INPUT_PULLUP);
+  pinMode(REC, INPUT_PULLUP);
+
+  pinMode(LANG, INPUT_PULLUP);
+  pinMode(WORD, INPUT_PULLUP);
+  
+  
+  
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
   while (!Serial);
 
   delay(1000);
 
-#if defined(ARDUINO_ARCH_MBED)
-  Serial.print("Starting SD Card ReadWrite on MBED ");
-#else
   Serial.print("Starting SD Card ReadWrite on ");
-#endif
-  
+
   Serial.println(BOARD_NAME);
   Serial.println(RP2040_SD_VERSION);
   
