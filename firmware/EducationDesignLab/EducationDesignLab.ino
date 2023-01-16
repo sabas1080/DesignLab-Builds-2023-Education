@@ -59,11 +59,21 @@ File f;
 #define LANG 26
 #define WORD 27
 
+#define S1 14
+#define S2 24
+#define S3 21
+#define S4 6
+
+unsigned int sensorsStatus[6];
+unsigned int sensorPins[6] = {S1,S2,S3,S4,LANG,WORD};
+
+unsigned int buttonStatus[8];
+unsigned int buttonPins[8] = {Button0,Button1,Button2,Button3,Button4,Button5,Button6,Button7};
+
 uint32_t wav_position = 0;
 
 uint32_t ChunkSize = 0;                 // this is the actual sound data size
 uint8_t* WAV_DATA;
-
 
 void printDirectory(File dir, int numTabs) 
 {
@@ -353,10 +363,94 @@ void readContents() {
     }  
 }
 
+void readSensor(){
+  for(int i=0; i<6 ;i++){
+    sensorsStatus[i] = digitalRead(sensorPins[i]);
+  }
+}
+
+void readButtons(){
+  for(int i=0; i<8 ;i++){
+    buttonStatus[i] = digitalRead(buttonPins[i]);
+  }
+}
+
+void selectPage(){
+
+  if(sensorsStatus[0] == 0 && sensorsStatus[1] == 0 && sensorsStatus[2] == 0 && sensorsStatus[3] == 0){
+    Serial.println("Page not Found");
+  }
+  if(sensorsStatus[0] == 1 && sensorsStatus[1] == 0 && sensorsStatus[2] == 0 && sensorsStatus[3] == 0){
+    Serial.println("Page 1");
+  }
+  if(sensorsStatus[0] == 0 && sensorsStatus[1] == 1 && sensorsStatus[2] == 0 && sensorsStatus[3] == 0){
+    Serial.println("Page 2");
+  }
+  
+  if(sensorsStatus[0] == 1 && sensorsStatus[1] == 1 && sensorsStatus[2] == 0 && sensorsStatus[3] == 0){
+    Serial.println("Page 3");
+  }
+  if(sensorsStatus[0] == 0 && sensorsStatus[1] == 0 && sensorsStatus[2] == 1 && sensorsStatus[3] == 0){
+    Serial.println("Page 4");
+  }
+  if(sensorsStatus[0] == 1 && sensorsStatus[1] == 0 && sensorsStatus[2] == 1 && sensorsStatus[3] == 0){
+    Serial.println("Page 5");
+  }
+  if(sensorsStatus[0] == 0 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 0){
+    Serial.println("Page 6");
+  }
+  if(sensorsStatus[0] == 1 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 0){
+    Serial.println("Page 7");
+  }
+  if(sensorsStatus[0] == 0 && sensorsStatus[1] == 0 && sensorsStatus[2] == 0 && sensorsStatus[3] == 1){
+    Serial.println("Page 8");
+  }
+  if(sensorsStatus[0] == 1 && sensorsStatus[1] == 0 && sensorsStatus[2] == 0 && sensorsStatus[3] == 1){
+    Serial.println("Page 9");
+  }
+  if(sensorsStatus[0] == 0 && sensorsStatus[1] == 1 && sensorsStatus[2] == 0 && sensorsStatus[3] == 1){
+    Serial.println("Page 10");
+  }
+  if(sensorsStatus[0] == 1 && sensorsStatus[1] == 1 && sensorsStatus[2] == 0 && sensorsStatus[3] == 1){
+    Serial.println("Page 11");
+  }
+  if(sensorsStatus[0] == 0 && sensorsStatus[1] == 0 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1){
+    Serial.println("Page 12");
+  }
+  if(sensorsStatus[0] == 1 && sensorsStatus[1] == 0 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1){
+    Serial.println("Page 13");
+  }
+  if(sensorsStatus[0] == 0 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1){
+    Serial.println("Page 14");
+  }
+  if(sensorsStatus[0] == 1 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1){
+    Serial.println("Page 15");
+  }
+}
+
+void selecLang(){
+  if(sensorsStatus[5]==1){
+    Serial.println("Language 1");
+  }
+  else{
+    Serial.println("Language 2");
+  }
+}
+
+void selectwordPhrase(){
+  if(sensorsStatus[6]==1){
+    Serial.println("Words");
+  }
+  else{
+    Serial.println("Phrase");
+  }
+}
 void setup() 
 {
   set_sys_clock_khz(176000, true);
+  
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(AMP_EN, OUTPUT);
   
   pinMode(Button0, INPUT_PULLUP);
   pinMode(Button1, INPUT_PULLUP);
@@ -367,13 +461,16 @@ void setup()
   pinMode(Button6, INPUT_PULLUP);
   pinMode(Button7, INPUT_PULLUP);
 
+  pinMode(S1, INPUT);
+  pinMode(S2, INPUT);
+  pinMode(S3, INPUT);
+  pinMode(S4, INPUT);
+
   pinMode(VOL, INPUT_PULLUP);
   pinMode(REC, INPUT_PULLUP);
 
   pinMode(LANG, INPUT_PULLUP);
   pinMode(WORD, INPUT_PULLUP);
-  
-  
   
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
@@ -396,18 +493,28 @@ void setup()
     Serial.println("Initialization failed!");
     return;
   }
-  Serial.println("Initialization done.");
+  
+  
   f = SD.open("/");
 
   printDirectory(f, 0);
   
-  readContents();
+  //readContents();
+  Serial.println("Initialization done.");
 }
 
 void loop() 
 {
+ 
+  readSensor();
+  selecLang();
+  selectwordPhrase();
+  selectPage();
+  //readContents();
+  
   // nothing happens after setup
   delay(500); 
+  
   // put your main code here, to run repeatedly:
   __wfi(); // Wait for Interrupt
 }
