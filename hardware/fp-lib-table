@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "Design")(type "KiCad")(uri "${KIPRJMOD}/DesignLab-Builds-2023-Education.pretty/Design.pretty")(options "")(descr ""))
+)
