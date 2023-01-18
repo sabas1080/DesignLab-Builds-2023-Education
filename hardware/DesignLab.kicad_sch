@@ -5850,7 +5850,7 @@
     (property "LCSC#" "" (id 4) (at 39.116 217.424 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "manf#" "EVQ-PLFA08" (id 5) (at 39.116 217.424 0)
+    (property "manf#" "TL3342F450QG" (id 5) (at 39.116 217.424 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Stock en Electronic Cats" "En Electronic Cats" (id 6) (at 39.116 217.424 0)
@@ -8502,7 +8502,7 @@
     (property "LCSC#" "" (id 4) (at 95.758 266.954 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "manf#" "EVQ-PLFA08" (id 5) (at 95.758 266.954 0)
+    (property "manf#" "TL3342F450QG" (id 5) (at 95.758 266.954 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Stock en Electronic Cats" "En Electronic Cats" (id 6) (at 95.758 266.954 0)
@@ -9415,7 +9415,7 @@
       (reference "SW2") (unit 1) (value "SW_DPDT_x2") (footprint "Design:OS102011MA1QN1")
     )
     (path "/3e6a15bc-a0c3-47bb-beab-64d542edcc16"
-      (reference "SW3") (unit 1) (value "Button") (footprint "Design:EVQPLFA08")
+      (reference "SW3") (unit 1) (value "REC") (footprint "Button_Switch_SMD:SW_SPST_TL3342")
     )
     (path "/04f33ebb-60dd-456c-8657-ff17e4842fa1"
       (reference "SW4") (unit 1) (value "Button") (footprint "Design:EVQPLFA08")
@@ -9448,7 +9448,7 @@
       (reference "SW13") (unit 1) (value "ON") (footprint "Design:OS102011MA1QN1")
     )
     (path "/e348a61a-40cc-454f-a7fc-2d69f7f1dd26"
-      (reference "SW14") (unit 1) (value "Button") (footprint "Design:EVQPLFA08")
+      (reference "SW14") (unit 1) (value "VOL") (footprint "Button_Switch_SMD:SW_SPST_TL3342")
     )
     (path "/966b56d4-3c92-4a21-bfbb-4f71bc45350f"
       (reference "SW15") (unit 1) (value "BOOT") (footprint "Button_Switch_SMD:SW_SPST_TL3342")
