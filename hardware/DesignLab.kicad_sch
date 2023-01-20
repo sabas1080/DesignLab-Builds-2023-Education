@@ -7867,7 +7867,7 @@
     (property "Stock en EC" "No" (id 4) (at 385.826 175.006 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "manf#" "534-2477" (id 5) (at 385.826 175.006 0)
+    (property "manf#" "12BH343-GR" (id 5) (at 385.826 175.006 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "provedor" "MOUSER" (id 6) (at 385.826 175.006 0)
@@ -7973,7 +7973,7 @@
     (property "LCSC#" "-" (id 4) (at 324.993 175.006 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "manf#" "OS102011MA1QN1" (id 5) (at 324.993 175.006 0)
+    (property "manf#" "TL3342F450QG" (id 5) (at 324.993 175.006 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "provedor" "MOUSER" (id 6) (at 324.993 175.006 0)
@@ -9256,7 +9256,7 @@
       (reference "#PWR0105") (unit 1) (value "GND") (footprint "")
     )
     (path "/b787c517-ecac-40e0-a211-870160b2f519"
-      (reference "BT4") (unit 1) (value "Battery_Cell") (footprint "Design:2477")
+      (reference "BT4") (unit 1) (value "Battery_Cell") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
     )
     (path "/902d9ee9-0c5c-4261-aa5f-66fe0365fde0"
       (reference "BZ1") (unit 1) (value "Buzzer") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
