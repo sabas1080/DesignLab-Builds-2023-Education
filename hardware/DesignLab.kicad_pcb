@@ -212,10 +212,10 @@
       (net 2 "GND") (pinfunction "GND_1") (pintype "passive") (tstamp e9fca838-feac-4c43-b139-7e1c8ada911d))
     (pad "C2" smd rect (at 2.525 0) (size 0.45 1) (layers "F.Cu" "F.Paste" "F.Mask")
       (net 2 "GND") (pinfunction "GND_2") (pintype "passive") (tstamp 8c13c718-2dde-454b-8a96-800f7511b276))
-    (model "EVQ-PLFA08.stp"
+    (model "${KIPRJMOD}/DesignLab-Builds-2023-Education.pretty/3D/EVQ-PLB_PLF_PLK_5PL-A08.STEP"
       (offset (xyz 0 0 0))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -633,8 +633,8 @@
       (net 79 "Net-(J1-Pad13)") (pinfunction "DET_A") (pintype "passive") (tstamp ed71e82a-cc16-4f08-b127-aab3738a2594))
     (pad "14" smd rect (at 5.65 -5.45 270) (size 1 1.55) (layers "F.Cu" "F.Paste" "F.Mask")
       (net 80 "Net-(J1-Pad14)") (pinfunction "DET_B") (pintype "passive") (tstamp 1407e285-978e-4d6a-94fb-d26a1ade0d46))
-    (model "1140084168.stp"
-      (offset (xyz 0.009999999626 5.679999743 1.499999977))
+    (model "${KIPRJMOD}/DesignLab-Builds-2023-Education.pretty/3D/114-00841-68.stp"
+      (offset (xyz 0 5.75 1.5))
       (scale (xyz 1 1 1))
       (rotate (xyz -90 0 0))
     )

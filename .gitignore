@@ -26,3 +26,5 @@ fp-info-cache
 *.csv
 
 hardware/DesignLab-backups/
+
+*.DS_Store
