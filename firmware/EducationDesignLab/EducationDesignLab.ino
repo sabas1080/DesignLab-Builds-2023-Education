@@ -1,7 +1,21 @@
 /****************************************************************************************************************************
+  Education Desing Lab
+  
+  Andres Sabas @ HackaDay
+  Original Creation Date: Jan 23, 2023
 
- *****************************************************************************************************************************/
-/*
+  Development environment specifics:
+  IDE: Arduino 1.8.19
+  Hardware Platform:
+  - RP2040
+  - MicroSD
+
+  This code is beerware; if you see me (or any other Electronic Cats
+  member) at the local, and you've found our code helpful,
+  please buy us a round!
+
+  Distributed as-is; no warranty is given.
+
   SD card connection
   SD card attached to SPI bus as follows:
    // Arduino-mbed core
@@ -33,10 +47,14 @@
 #include "hardware/pll.h"
 #include "hardware/clocks.h"
 
+#define language1 "language1/"
+#define language2 "language2/"
+
 #define pathPhrases "phrases/"
 #define pathWords "words/"
 
-#define fileName  "chona.wav"
+#define fileName2  "1_1.wav"
+String fileName = "";
 
 File f;
 
@@ -375,6 +393,52 @@ void readButtons(){
   }
 }
 
+void getKeys()
+{
+  uint32_t cols;
+  uint all_columns_mask = 0x0;
+
+  cols = gpio_get_all();
+  cols = cols & all_columns_mask;
+}
+
+void selectAudio(){
+  Serial.println("selectAudio");
+  if(buttonStatus[0] == 0 && buttonStatus[1] == 0 && buttonStatus[2] == 0 && buttonStatus[3] == 0){
+    Serial.println("Button unpress");
+  }
+  if(buttonStatus[0] == 1 && buttonStatus[1] == 0 && buttonStatus[2] == 0 && buttonStatus[3] == 0){
+    Serial.println("Button 1");
+    fileName = fileName + "1_1.wav";
+  }
+  fileName = fileName + "1_1.wav";
+  Serial.println(fileName);
+  
+  /*if(buttonStatus[0] == 0 && buttonStatus[1] == 1 && buttonStatus[2] == 0 && buttonStatus[3] == 0){
+    Serial.println("Page 2");
+  }
+  
+  if(buttonStatus[0] == 1 && buttonStatus[1] == 1 && buttonStatus[2] == 0 && buttonStatus[3] == 0){
+    Serial.println("Page 3");
+  }
+  if(buttonStatus[0] == 0 && buttonStatus[1] == 0 && buttonStatus[2] == 1 && buttonStatus[3] == 0){
+    Serial.println("Page 4");
+  }
+  if(buttonStatus[0] == 1 && buttonStatus[1] == 0 && buttonStatus[2] == 1 && buttonStatus[3] == 0){
+    Serial.println("Page 5");
+  }
+  if(buttonStatus[0] == 0 && buttonStatus[1] == 1 && buttonStatus[2] == 1 && buttonStatus[3] == 0){
+    Serial.println("Page 6");
+  }
+  if(buttonStatus[0] == 1 && buttonStatus[1] == 1 && buttonStatus[2] == 1 && buttonStatus[3] == 0){
+    Serial.println("Page 7");
+  }
+  if(buttonStatus[0] == 0 && buttonStatus[1] == 0 && buttonStatus[2] == 0 && buttonStatus[3] == 1){
+    Serial.println("Page 8");
+  }*/
+  //readContents();
+  fileName = "";
+}
 void selectPage(){
 
   if(sensorsStatus[0] == 0 && sensorsStatus[1] == 0 && sensorsStatus[2] == 0 && sensorsStatus[3] == 0){
@@ -422,8 +486,10 @@ void selectPage(){
   }
   if(sensorsStatus[0] == 0 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1){
     Serial.println("Page 14");
+    fileName = fileName + "page14/";
   }
   if(sensorsStatus[0] == 1 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1){
+    fileName = fileName + "page15/";
     Serial.println("Page 15");
   }
 }
@@ -431,18 +497,22 @@ void selectPage(){
 void selecLang(){
   if(sensorsStatus[5]==1){
     Serial.println("Language 1");
+    fileName = fileName + "LANG2/";
   }
   else{
     Serial.println("Language 2");
+    fileName = fileName + "LANG1/";
   }
 }
 
 void selectwordPhrase(){
   if(sensorsStatus[6]==1){
-    Serial.println("Words");
+    Serial.println("Phrases");
+    fileName = fileName + "phrases/";
   }
   else{
-    Serial.println("Phrase");
+    Serial.println("Words");
+    fileName = fileName + "words/";
   }
 }
 void setup() 
@@ -495,22 +565,21 @@ void setup()
   }
   
   
-  f = SD.open("/");
-
-  printDirectory(f, 0);
-  
-  //readContents();
+  //f = SD.open("/");
+  //printDirectory(f, 0);
+  readContents();
   Serial.println("Initialization done.");
 }
 
 void loop() 
 {
  
-  readSensor();
-  selecLang();
-  selectwordPhrase();
-  selectPage();
-  //readContents();
+  //readSensor();
+  //selecLang();
+  //selectwordPhrase();
+  //selectPage();
+  //selectAudio();
+  
   
   // nothing happens after setup
   delay(500); 
