@@ -1,7 +1,19 @@
 /****************************************************************************************************************************
+  Andres Sabas @ HackaDay
+  Original Creation Date: Jan 23, 2023
 
- *****************************************************************************************************************************/
-/*
+  Development environment specifics:
+  IDE: Arduino 1.8.19
+  Hardware Platform:
+  - RP2040
+  - MicroSD
+
+  This code is beerware; if you see me (or any other Electronic Cats
+  member) at the local, and you've found our code helpful,
+  please buy us a round!
+
+  Distributed as-is; no warranty is given.
+
   SD card connection
   SD card attached to SPI bus as follows:
    // Arduino-mbed core
@@ -9,7 +21,7 @@
    ** MOSI - pin 3
    ** CS   - pin 5
    ** SCK  - pin 2
-*/
+***************************************************************************************/
 
 #define DEBUG
 
