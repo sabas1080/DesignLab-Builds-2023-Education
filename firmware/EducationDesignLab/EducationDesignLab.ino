@@ -11,6 +11,8 @@
    ** SCK  - pin 2
 */
 
+#define DEBUG
+
 #if !defined(ARDUINO_ARCH_RP2040)
 #error For RP2040 only
 #endif
@@ -33,10 +35,6 @@
 #include "hardware/pll.h"
 #include "hardware/clocks.h"
 
-char *pathPhrases = "/phrases";
-char *pathWords = "/words";
-
-//char fname1[] = "/root/lang2/3_2.wav";
 char fname1[64];
 
 File f;
@@ -72,12 +70,6 @@ File f;
 String cadena;
 
 uint32_t cols;
-
-unsigned int sensorsStatus[6];
-unsigned int sensorPins[6] = {S1, S2, S3, S4, LANG, WORD};
-
-unsigned int buttonStatus[8];
-unsigned int buttonPins[8] = {Button0, Button1, Button2, Button3, Button4, Button5, Button6, Button7};
 
 uint32_t wav_position = 0;
 
@@ -229,6 +221,7 @@ void pwm_interrupt_handler() {
   } else {
     // reset to start
     wav_position = 0;
+    disableInt();
   }
 }
 
@@ -239,13 +232,15 @@ bool readContents(const char *fname) {
   f = SD.open(fname, FILE_READ);
   if (f) {
     size_t bytesRead = f.read(&wavHeader, headerSize);
+    #ifdef DEBUG
     Serial.print("Header Read "); Serial.print(bytesRead); Serial.println(" bytes.");
+    #endif
     if (bytesRead > 0) {
       //Read the data
       uint16_t bytesPerSample = wavHeader.bitsPerSample / 8;      //Number     of bytes per sample
       uint64_t numSamples = wavHeader.ChunkSize / bytesPerSample; //How many samples are in the wav file?
       //static const uint16_t BUFFER_SIZE = 4096;
-
+      #ifdef DEBUG
       Serial.println();
       Serial.print("RIFF header                :"); Serial.print((char)wavHeader.RIFF[0]); Serial.print((char)wavHeader.RIFF[1]); Serial.print((char)wavHeader.RIFF[2]); Serial.println((char)wavHeader.RIFF[3]);
       Serial.print("Chunk Size                 :"); Serial.print(wavHeader.ChunkSize); Serial.print(" TOTAL: "); Serial.print(wavHeader.ChunkSize + 8);  Serial.print(" DATA: "); Serial.println(wavHeader.ChunkSize - (36 + wavHeader.Subchunk2Size) - 8);
@@ -265,7 +260,8 @@ bool readContents(const char *fname) {
 
       Serial.print("Data string (Subchunk2 ID) :"); Serial.print((char)wavHeader.Subchunk2ID[0]); Serial.print((char)wavHeader.Subchunk2ID[1]); Serial.print((char)wavHeader.Subchunk2ID[2]); Serial.println((char)wavHeader.Subchunk2ID[3]);
       Serial.print("Subchunk2 size             :"); Serial.print(wavHeader.Subchunk2Size); Serial.print(" validate: "); Serial.println(numSamples * wavHeader.NumOfChan * bytesPerSample);
-
+      #endif
+      
       if (memcmp((char*)wavHeader.Subchunk2ID, "LIST", 4) == 0) {
         Serial.println("List chunk (of a RIFF file):");
 
@@ -320,7 +316,6 @@ bool readContents(const char *fname) {
 
       WAV_DATA = new uint8_t[ChunkSize];
 
-      //int8_t* buffer = new int8_t[BUFFER_SIZE];
       bytesRead = f.read(WAV_DATA, ChunkSize / (sizeof WAV_DATA[0]));
       if (bytesRead)
       {
@@ -331,6 +326,7 @@ bool readContents(const char *fname) {
         Serial.print("File size is: "); Serial.print(fileSize); Serial.println(" bytes.");
 
         f.close();
+        enableInt();
       }
       delete [] WAV_DATA;
     }
@@ -376,7 +372,7 @@ void enableInt() {
   pwm_set_gpio_level(AUDIO_PIN, 0);
 }
 
-void disableINT() {
+void disableInt() {
 
   // Setup PWM interrupt to fire when PWM cycle is complete
   //pwm_clear_irq(audio_pin_slice);
@@ -396,60 +392,18 @@ void selectPage() {
   /*if ((cols & maskBtn(S1)) && (cols & maskBtn(S2)) && (cols & maskBtn(S3)) && (cols & maskBtn(S4))) {
     Serial.println("Page not Found");
   }*/
-  if (cols & maskBtn(S1)) {
+  cadena +="page1/";
+  /*if (cols & maskBtn(S1)) {
     cadena +="page1/";
     Serial.println("Page 1");
   }
   if (cols & maskBtn(S2)) {
     cadena +="page2/";
     Serial.println("Page 2");
-  }
-  if (sensorsStatus[0] == 1 && sensorsStatus[1] == 1 && sensorsStatus[2] == 0 && sensorsStatus[3] == 0) {
-    cadena +="page3/";
-    Serial.println("Page 3");
-  }
-  if (sensorsStatus[0] == 0 && sensorsStatus[1] == 0 && sensorsStatus[2] == 1 && sensorsStatus[3] == 0) {
-    Serial.println("Page 4");
-  }
-  if (sensorsStatus[0] == 1 && sensorsStatus[1] == 0 && sensorsStatus[2] == 1 && sensorsStatus[3] == 0) {
-    Serial.println("Page 5");
-  }
-  if (sensorsStatus[0] == 0 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 0) {
-    Serial.println("Page 6");
-  }
-  if (sensorsStatus[0] == 1 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 0) {
-    Serial.println("Page 7");
-  }
-  if (sensorsStatus[0] == 0 && sensorsStatus[1] == 0 && sensorsStatus[2] == 0 && sensorsStatus[3] == 1) {
-    Serial.println("Page 8");
-  }
-  if (sensorsStatus[0] == 1 && sensorsStatus[1] == 0 && sensorsStatus[2] == 0 && sensorsStatus[3] == 1) {
-    Serial.println("Page 9");
-  }
-  if (sensorsStatus[0] == 0 && sensorsStatus[1] == 1 && sensorsStatus[2] == 0 && sensorsStatus[3] == 1) {
-    Serial.println("Page 10");
-  }
-  if (sensorsStatus[0] == 1 && sensorsStatus[1] == 1 && sensorsStatus[2] == 0 && sensorsStatus[3] == 1) {
-    Serial.println("Page 11");
-  }
-  if (sensorsStatus[0] == 0 && sensorsStatus[1] == 0 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1) {
-    Serial.println("Page 12");
-  }
-  if (sensorsStatus[0] == 1 && sensorsStatus[1] == 0 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1) {
-    Serial.println("Page 13");
-  }
-  if (sensorsStatus[0] == 0 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1) {
-    Serial.println("Page 14");
-  }
-  if (sensorsStatus[0] == 1 && sensorsStatus[1] == 1 && sensorsStatus[2] == 1 && sensorsStatus[3] == 1) {
-    Serial.println("Page 15");
-  }
+  }*/
 }
 
 void selectButton() {
-  cadena +="1.wav";
-  Serial.println("cadena es: ");
-  Serial.println(cadena);
   
   if (cols & maskBtn(Button0)) {
     cadena +="1.wav";
@@ -483,30 +437,37 @@ void selectButton() {
     cadena +="8.wav";
     Serial.println("Button 8");
   }
-  
-  //readContents(cadena.c_str());
+
+  #ifdef DEBUG
+  Serial.println("cadena es: ");
+  Serial.println(cadena);
+  #endif
+
+  if((cols & maskBtn(Button0)) || (cols & maskBtn(Button1))) //|| (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)));
+  {
+    #ifdef DEBUG
+    Serial.println("Playing...");
+    #endif
+    readContents(cadena.c_str());
+  }
 }
 
 void selecLang() {
   if (cols & maskBtn(LANG)) {
     cadena = "lang1/";
-    Serial.println("Language 1");
   }
   else {
     cadena = "lang2/";
-    Serial.println("Language 2");
   }
 }
 
 void selectwordPhrase() {
   
   if (cols & maskBtn(WORD)) {
-    cadena += "word/";
-    Serial.println("Words");
+    cadena += "words/";
   }
   else {
     cadena += "phrase/";
-    Serial.println("Phrase");
   }
 }
 void setup()
@@ -542,8 +503,8 @@ void setup()
   Serial.begin(115200);
   while (!Serial);
 
-  Serial.print("Starting SD Card ReadWrite on ");
-
+  #ifdef DEBUG
+  Serial.print("Starting SD Card");
   Serial.println(BOARD_NAME);
   Serial.println(RP2040_SD_VERSION);
 
@@ -551,7 +512,8 @@ void setup()
   Serial.print("SCK = ");   Serial.println(PIN_SD_SCK);
   Serial.print("MOSI = ");  Serial.println(PIN_SD_MOSI);
   Serial.print("MISO = ");  Serial.println(PIN_SD_MISO);
-
+  #endif
+  
   if (!cols & maskBtn(CD)) {
     Serial.println("No Insert SD Card");
     return;
@@ -578,8 +540,9 @@ void loop()
   selectPage();
   selectButton();
 
-  // nothing happens after setup
-  delay(500);
+  #ifdef DEBUG
+    delay(500);
+  #endif
 
   // put your main code here, to run repeatedly:
   __wfi(); // Wait for Interrupt
