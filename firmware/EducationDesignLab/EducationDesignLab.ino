@@ -399,20 +399,74 @@ void readSensor() {
 }
 
 void selectPage() {
-  //uint32_t sumatoria = ((cols & maskBtn(Button0)) | (cols & maskBtn(Button1)));
-  //Serial.println(sumatoria);
-  /*if ((cols & maskBtn(S1)) && (cols & maskBtn(S2)) && (cols & maskBtn(S3)) && (cols & maskBtn(S4))) {
+  uint8_t suma = ((cols & maskBtn(S1))>>14) + ((cols & maskBtn(S2))>>23) + ((cols & maskBtn(S3))>>19) + ((cols & maskBtn(S4))>>3);
+  //int suma = (cols & maskBtn(S4))>>3;
+  Serial.print("suma es: ");
+  Serial.println(suma);
+  if (suma == 0) {
     Serial.println("Page not Found");
-  }*/
-  cadena +="page1/";
-  /*if (cols & maskBtn(S1)) {
+  }
+  if (suma == 1) {
     cadena +="page1/";
     Serial.println("Page 1");
   }
-  if (cols & maskBtn(S2)) {
+  if (suma == 2) {
     cadena +="page2/";
     Serial.println("Page 2");
-  }*/
+  }
+  if (suma == 3) {
+    cadena +="page3/";
+    Serial.println("Page 3");
+  }
+  if (suma == 4) {
+  cadena +="page4/";
+    Serial.println("Page 4");
+  }
+  if (suma == 5) {
+    cadena +="page5/";
+    Serial.println("Page 5");
+  }
+  if (suma == 6) {
+    cadena +="page6/";
+    Serial.println("Page 6");
+  }
+  if (suma == 6) {
+    cadena +="page7/";
+    Serial.println("Page 7");
+  }
+  if (suma == 8) {
+    cadena +="page8/";
+    Serial.println("Page 8");
+  }
+  if (suma == 9) {
+    cadena +="page9/";
+    Serial.println("Page 9");
+  }
+  if (suma == 10) {
+    cadena +="page10/";
+    Serial.println("Page 10");
+  }
+  if (suma == 11) {
+    cadena +="page11/";
+    Serial.println("Page 11");
+  }
+  if (suma == 12) {
+    cadena +="page12/";
+    Serial.println("Page 12");
+  }
+  if (suma == 13) {
+    cadena +="page13/";
+    Serial.println("Page 13");
+  }
+  if (suma == 14) {
+    cadena +="page14/";
+    Serial.println("Page 14");
+  }
+  if (suma == 15) {
+    cadena +="page15/";
+    Serial.println("Page 15");
+  }
+  
 }
 
 void selectButton() {
@@ -454,14 +508,15 @@ void selectButton() {
   Serial.println("cadena es: ");
   Serial.println(cadena);
   #endif
-
-  if((cols & maskBtn(Button0)) || (cols & maskBtn(Button1))) //|| (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)));
+  Serial.print("Para Playing: ");
+  Serial.println((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)));;
+  /*if((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)));
   {
     #ifdef DEBUG
     Serial.println("Playing...");
     #endif
     readContents(cadena.c_str());
-  }
+  }*/
 }
 
 void selecLang() {
