@@ -400,7 +400,6 @@ void readSensor() {
 
 void selectPage() {
   uint8_t suma = ((cols & maskBtn(S1))>>14) + ((cols & maskBtn(S2))>>23) + ((cols & maskBtn(S3))>>19) + ((cols & maskBtn(S4))>>3);
-  //int suma = (cols & maskBtn(S4))>>3;
   Serial.print("suma es: ");
   Serial.println(suma);
   if (suma == 0) {
@@ -408,62 +407,77 @@ void selectPage() {
   }
   if (suma == 1) {
     cadena +="page1/";
+    selectButton();
     Serial.println("Page 1");
   }
   if (suma == 2) {
     cadena +="page2/";
+    selectButton();
     Serial.println("Page 2");
   }
   if (suma == 3) {
     cadena +="page3/";
+    selectButton();
     Serial.println("Page 3");
   }
   if (suma == 4) {
   cadena +="page4/";
+  selectButton();
     Serial.println("Page 4");
   }
   if (suma == 5) {
     cadena +="page5/";
+    selectButton();
     Serial.println("Page 5");
   }
   if (suma == 6) {
     cadena +="page6/";
+    selectButton();
     Serial.println("Page 6");
   }
   if (suma == 6) {
     cadena +="page7/";
+    selectButton();
     Serial.println("Page 7");
   }
   if (suma == 8) {
     cadena +="page8/";
+    selectButton();
     Serial.println("Page 8");
   }
   if (suma == 9) {
     cadena +="page9/";
+    selectButton();
     Serial.println("Page 9");
   }
   if (suma == 10) {
     cadena +="page10/";
+    selectButton();
     Serial.println("Page 10");
   }
   if (suma == 11) {
     cadena +="page11/";
+    selectButton();
     Serial.println("Page 11");
   }
   if (suma == 12) {
     cadena +="page12/";
+    selectButton();
     Serial.println("Page 12");
   }
   if (suma == 13) {
     cadena +="page13/";
+    selectButton();
     Serial.println("Page 13");
   }
   if (suma == 14) {
     cadena +="page14/";
+    selectButton();
     Serial.println("Page 14");
   }
   if (suma == 15) {
     cadena +="page15/";
+    selectButton();
     Serial.println("Page 15");
   }
   
@@ -509,14 +523,14 @@ void selectButton() {
   Serial.println(cadena);
   #endif
   Serial.print("Para Playing: ");
-  Serial.println((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)));;
-  /*if((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)));
+  Serial.println((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)));
+  if((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)))
   {
     #ifdef DEBUG
     Serial.println("Playing...");
     #endif
     readContents(cadena.c_str());
-  }*/
+  }
 }
 
 void selecLang() {
@@ -601,16 +615,20 @@ void setup()
 
 void loop()
 {
-  readSensor();
-  selecLang();
-  selectwordPhrase();
-  selectPage();
-  selectButton();
+  if(wav_position == 0){
+    readSensor();
+    selecLang();
+    selectwordPhrase();
+    selectPage();
+  }
+  /*Serial.print("ChunkSize: ");
+  Serial.println(((ChunkSize << 3) - 1));
+
+  Serial.print("wav_position: ");
+  Serial.println(wav_position);
+  */
 
   #ifdef DEBUG
     delay(500);
   #endif
-
-  // put your main code here, to run repeatedly:
-  __wfi(); // Wait for Interrupt
 }
