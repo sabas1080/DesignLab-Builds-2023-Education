@@ -235,13 +235,15 @@ void pwm_interrupt_handler() {
     // reset to start
     wav_position = 0;
     disableInt();
-    //delete [] WAV_DATA;
+    digitalWrite(AMP_EN, LOW);
   }
 }
 
 bool readContents(const char *fname) {
   wav_hdr wavHeader;
   int headerSize = sizeof(wav_hdr);
+
+  digitalWrite(AMP_EN, HIGH);
 
   f = SD.open(fname, FILE_READ);
   if (f) {
@@ -629,6 +631,8 @@ void setup()
   Serial.print("MOSI = ");  Serial.println(PIN_SD_MOSI);
   Serial.print("MISO = ");  Serial.println(PIN_SD_MISO);
   #endif
+  
+  digitalWrite(AMP_EN, LOW);
   
   if (!cols & maskBtn(CD)) {
     Serial.println("No Insert SD Card");
