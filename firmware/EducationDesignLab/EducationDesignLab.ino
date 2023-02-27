@@ -76,6 +76,7 @@ File f;
 #define S4 6
 
 #define CD 15
+#define LED 25
 
 #define maskBtn(B) 1<<B
 
@@ -571,6 +572,16 @@ void selectwordPhrase() {
     cadena += "phrase/";
   }
 }
+
+void blink(int pin, int msdelay, int times){
+  for (int i = 0; i < times; i++){
+    digitalWrite(pin, HIGH);
+    delay(msdelay);
+    digitalWrite(pin, LOW);
+    delay(msdelay);
+  }
+}
+
 void setup()
 {
   set_sys_clock_khz(176000, true);
@@ -600,8 +611,10 @@ void setup()
 
   pinMode(CD, INPUT_PULLUP);
 
+  pinMode(LED, OUTPUT);
+
   // Open serial communications and wait for port to open:
-  Serial.begin(115200);
+  Serial.begin(9600);
   #ifdef DEBUG
   while (!Serial);
   #endif
@@ -631,7 +644,8 @@ void setup()
   f = SD.open("/");
 
   printDirectory(f, 0);
-
+  
+  blink(LED, 200, 5);
   Serial.println("Initialization done.");
 }
 
