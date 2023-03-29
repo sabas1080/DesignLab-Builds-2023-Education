@@ -48,7 +48,7 @@
 #include <SW_MCP4017.h>
 
 uint8_t dpMaxSteps = 128; //remember even thought the the digital pot has 128 steps it looses one on either end (usually cant go all the way to last tick)
-int maxRangeOhms = 50000; //this is a 5K potentiometer
+int maxRangeOhms = 50000; //this is a 50K potentiometer
 MCP4017 i2cDP(MCP4017ADDRESS, dpMaxSteps, maxRangeOhms);
 
 uint8_t v = 0; //volumen
@@ -598,19 +598,26 @@ void selectwordPhrase() {
 
 void volumen() {
   if (cols & maskBtn(VOL)) {
+    #ifdef DEBUG
     Serial.print("Setting to Volumen: ");
-    
+    #endif
     if (v == 1) {
       i2cDP.setSteps(127);
+      #ifdef DEBUG
       Serial.println(v);
+      #endif
     }
     if (v == 2) {
       i2cDP.setSteps(64);
+      #ifdef DEBUG
       Serial.println(v);
+      #endif
     }
     if (v == 3) {
       i2cDP.setSteps(32);
+      #ifdef DEBUG
       Serial.println(v);
+      #endif
       v = 0;
     }
     v++;
@@ -693,12 +700,17 @@ void setup()
 
   f = SD.open("/");
 
+  #ifdef DEBUG
   printDirectory(f, 0);
+  #endif
 
   Wire.begin();
 
   blink(LED, 200, 5);
+  
+  #ifdef DEBUG
   Serial.println("Initialization done.");
+  #endif
 }
 
 void loop()
