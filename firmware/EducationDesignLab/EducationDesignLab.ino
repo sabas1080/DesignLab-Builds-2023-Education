@@ -51,7 +51,7 @@ uint8_t dpMaxSteps = 128; //remember even thought the the digital pot has 128 st
 int maxRangeOhms = 50000; //this is a 50K potentiometer
 MCP4017 i2cDP(MCP4017ADDRESS, dpMaxSteps, maxRangeOhms);
 
-uint8_t v = 0; //volumen
+uint8_t v = 1; //volumen
 
 char fname1[64];
 
@@ -602,7 +602,7 @@ void volumen() {
     Serial.print("Setting to Volumen: ");
     #endif
     if (v == 1) {
-      i2cDP.setSteps(127);
+      i2cDP.setSteps(32);
       #ifdef DEBUG
       Serial.println(v);
       #endif
@@ -614,7 +614,7 @@ void volumen() {
       #endif
     }
     if (v == 3) {
-      i2cDP.setSteps(32);
+      i2cDP.setSteps(127);
       #ifdef DEBUG
       Serial.println(v);
       #endif
@@ -705,6 +705,7 @@ void setup()
   #endif
 
   Wire.begin();
+  i2cDP.setSteps(127);
 
   blink(LED, 200, 5);
   
