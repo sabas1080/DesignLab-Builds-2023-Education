@@ -24,7 +24,7 @@
 ***************************************************************************************/
 
 //#define DEBUG
-#define _RP2040_SD_LOGLEVEL_       4
+//#define _RP2040_SD_LOGLEVEL_       4
 
 #if !defined(ARDUINO_ARCH_RP2040)
 #error For RP2040 only
@@ -548,6 +548,10 @@ void selectButton() {
     cadena += "8.wav";
     //Serial.println("Button 8");
   }
+  if (cols & maskBtn(Button8)) {
+    cadena += "9.wav";
+    //Serial.println("Button 9");
+  }
 
 #ifdef DEBUG
   Serial.println("cadena es: ");
@@ -652,6 +656,7 @@ void setup()
   pinMode(Button5, INPUT_PULLUP);
   pinMode(Button6, INPUT_PULLUP);
   pinMode(Button7, INPUT_PULLUP);
+  pinMode(Button8, INPUT_PULLUP);
 
   pinMode(S1, INPUT);
   pinMode(S2, INPUT);
