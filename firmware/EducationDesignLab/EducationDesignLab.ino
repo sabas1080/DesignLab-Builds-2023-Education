@@ -466,7 +466,7 @@ void selectPage() {
     selectButton();
     //Serial.println("Page 6");
   }
-  if (suma == 6) {
+  if (suma == 7) {
     cadena += "page7/";
     selectButton();
     //Serial.println("Page 7");
