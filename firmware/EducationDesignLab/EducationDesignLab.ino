@@ -558,9 +558,9 @@ void selectButton() {
   Serial.println(cadena);
 
   Serial.print("Para Playing: ");
-  Serial.println((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)));
+  Serial.println((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)) || (cols & maskBtn(Button8)));
 #endif
-  if ((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)))
+  if ((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)) || (cols & maskBtn(Button8)))
   {
 #ifdef DEBUG
     Serial.println("Playing...");
