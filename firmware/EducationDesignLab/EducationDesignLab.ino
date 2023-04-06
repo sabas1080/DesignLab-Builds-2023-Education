@@ -625,6 +625,8 @@ void volumen() {
       v = 0;
     }
     v++;
+    cadena = "sys/decide.wav";
+    readContents(cadena.c_str());
     //Serial.println("Setting Resistance to 1800Ohms");
     //i2cDP.setResistance(10000); //example showing how to pass a desired resistance in
 
