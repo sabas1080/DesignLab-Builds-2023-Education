@@ -180,6 +180,11 @@
       (net 3 "/D2") (pinfunction "2") (pintype "passive") (tstamp 6d4d90bb-6b04-426e-8ec2-06cd446f65e7))
     (pad "2" smd roundrect (at 7 2.5 270) (size 3 1.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25)
       (net 3 "/D2") (pinfunction "2") (pintype "passive") (tstamp 5a1a7dca-29e6-4bbd-b0a9-8295a09a276a))
+    (model "/home/sabas/Documentos/electroniccats/DesignLab-Builds-2023-Education/hardware/DesignLab-Builds-2023-Education.pretty/3D/Play Button TR12S v3.step"
+      (offset (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 0))
+    )
   )
 
   (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" (layer "F.Cu")
@@ -277,6 +282,11 @@
       (net 1 "/D8") (pinfunction "2") (pintype "passive") (tstamp 0e9af36e-da7b-49c8-8c13-286630636105))
     (pad "2" smd roundrect (at 7 2.5 90) (size 3 1.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25)
       (net 1 "/D8") (pinfunction "2") (pintype "passive") (tstamp 494b230b-4c15-4799-b953-42598a536b36))
+    (model "/home/sabas/Documentos/electroniccats/DesignLab-Builds-2023-Education/hardware/DesignLab-Builds-2023-Education.pretty/3D/Play Button TR12S v3.step"
+      (offset (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 0))
+    )
   )
 
   (footprint "Design:Button" (layer "F.Cu")
@@ -312,6 +322,11 @@
       (net 2 "/D5") (pinfunction "2") (pintype "passive") (tstamp 36b610da-e7f8-4264-971c-d4a6363bf26b))
     (pad "2" smd roundrect (at 7 2.5 270) (size 3 1.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25)
       (net 2 "/D5") (pinfunction "2") (pintype "passive") (tstamp c62471f3-0ca4-4c67-a4ba-ce9a350a4af9))
+    (model "/home/sabas/Documentos/electroniccats/DesignLab-Builds-2023-Education/hardware/DesignLab-Builds-2023-Education.pretty/3D/Play Button TR12S v3.step"
+      (offset (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 0))
+    )
   )
 
   (gr_line (start 131.63 123.185) (end 131.63 128.185)

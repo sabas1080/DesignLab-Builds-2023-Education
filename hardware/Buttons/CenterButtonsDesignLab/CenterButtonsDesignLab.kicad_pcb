@@ -127,6 +127,11 @@
       (net 3 "/D4") (pinfunction "2") (pintype "passive") (tstamp a3ef48d6-8437-4599-b96b-ef4884b0f334))
     (pad "2" smd roundrect (at 7 2.5 90) (size 3 1.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25)
       (net 3 "/D4") (pinfunction "2") (pintype "passive") (tstamp 827b3675-838c-4adf-a268-2f256018b6ef))
+    (model "/home/sabas/Documentos/electroniccats/DesignLab-Builds-2023-Education/hardware/DesignLab-Builds-2023-Education.pretty/3D/Play Button TR12S v3.step"
+      (offset (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 0))
+    )
   )
 
   (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" (layer "F.Cu")
@@ -224,6 +229,11 @@
       (net 4 "/D1") (pinfunction "2") (pintype "passive") (tstamp 139d2fcc-0c22-4710-9255-385acc521abe))
     (pad "2" smd roundrect (at 7 2.5 270) (size 3 1.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25)
       (net 4 "/D1") (pinfunction "2") (pintype "passive") (tstamp 8b3fdd06-3f01-452d-b0ae-dc3f2ddb2a6d))
+    (model "/home/sabas/Documentos/electroniccats/DesignLab-Builds-2023-Education/hardware/DesignLab-Builds-2023-Education.pretty/3D/Play Button TR12S v3.step"
+      (offset (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 0))
+    )
   )
 
   (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" (layer "F.Cu")
@@ -387,6 +397,11 @@
       (net 2 "/D7") (pinfunction "2") (pintype "passive") (tstamp f216adc7-642f-49bc-b703-01c6a707f002))
     (pad "2" smd roundrect (at 7 2.5 90) (size 3 1.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25)
       (net 2 "/D7") (pinfunction "2") (pintype "passive") (tstamp 3ab584d7-5075-4169-af21-c069c8c50d41))
+    (model "/home/sabas/Documentos/electroniccats/DesignLab-Builds-2023-Education/hardware/DesignLab-Builds-2023-Education.pretty/3D/Play Button TR12S v3.step"
+      (offset (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 0))
+    )
   )
 
   (gr_circle (center 179.15 73.02625) (end 180.65 73.02625)
