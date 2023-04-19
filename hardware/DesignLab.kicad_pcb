@@ -82,7 +82,7 @@
       (mirror false)
       (drillshape 0)
       (scaleselection 1)
-      (outputdirectory "educationMainBoard_gerbers_v1.0/")
+      (outputdirectory "educationMainBoard_gerbers_v1.1/")
     )
   )
 
