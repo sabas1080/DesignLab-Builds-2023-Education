@@ -62,13 +62,13 @@ File f;
 #define AMP_EN 0 //Enable Ampli
 
 #define Button0 8
-#define Button1 11
-#define Button2 20
-#define Button3 7
+#define Button1 7
+#define Button2 2
+#define Button3 11
 #define Button4 10
-#define Button5 13
-#define Button6 2
-#define Button7 9
+#define Button5 9
+#define Button6 20
+#define Button7 13
 #define Button8 12
 
 #define VOL 1
