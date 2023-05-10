@@ -1,0 +1,4 @@
+"#","Reference","Qty","Value","Footprint","DNP","LCSC#","manf# "
+"1","J1","1","Conn_01x03","Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical","DNP","",""
+"2","J2","1","Conn_01x01","Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical","DNP","",""
+"3","SW1, SW2, SW3","3","SW_Push","Design:Button","","C5141768",""

@@ -346,7 +346,7 @@
   )
 
   (symbol (lib_id "Connector_Generic:Conn_01x03") (at 189.23 33.655 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (in_bom yes) (on_board yes) (dnp yes) (fields_autoplaced)
     (uuid 770cfcbf-fbff-423c-9ae2-07f62bae48ea)
     (property "Reference" "J1" (at 192.405 33.02 0)
       (effects (font (size 1.27 1.27)) (justify left))
@@ -378,7 +378,7 @@
   )
 
   (symbol (lib_id "Connector_Generic:Conn_01x01") (at 189.865 23.495 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (in_bom yes) (on_board yes) (dnp yes) (fields_autoplaced)
     (uuid bcaed209-1dca-4082-aa69-96e1fd8271d4)
     (property "Reference" "J2" (at 193.04 22.86 0)
       (effects (font (size 1.27 1.27)) (justify left))
