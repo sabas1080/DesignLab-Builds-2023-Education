@@ -696,13 +696,17 @@ void setup()
 
   if (!cols & maskBtn(CD)) {
     Serial.println("No Insert SD Card");
-    return;
+     while(1){
+      blink(LED, 300, 5);
+    }
   }
 
   if (!SD.begin(PIN_SD_SS))
   {
     Serial.println("Initialization SD failed!");
-    return;
+     while(1){
+      blink(LED, 300, 5);
+    }
   }
 
   f = SD.open("/");
@@ -713,12 +717,11 @@ void setup()
 
   Wire.begin();
   i2cDP.setSteps(127);
-
-  blink(LED, 200, 5);
   
   #ifdef DEBUG
   Serial.println("Initialization done.");
   #endif
+  blink(LED, 200, 3);
 }
 
 void loop()
