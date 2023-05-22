@@ -243,6 +243,7 @@ void pwm_interrupt_handler() {
     wav_position = 0;
     disableInt();
     digitalWrite(AMP_EN, LOW);
+    cadena = "";
   }
 }
 
