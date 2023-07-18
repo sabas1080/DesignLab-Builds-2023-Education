@@ -74,8 +74,8 @@ File f;
 #define VOL 1
 #define REC 3
 
-#define LANG 26
-#define WORD 27
+#define LANG 27
+#define WORD 26
 
 #define S1 14
 #define S2 6
@@ -87,7 +87,7 @@ File f;
 
 #define maskBtn(B) 1<<B
 
-String cadena;
+String cadena,cadena2;
 
 uint32_t cols;
 
@@ -244,6 +244,7 @@ void pwm_interrupt_handler() {
     disableInt();
     digitalWrite(AMP_EN, LOW);
     cadena = "";
+    cadena2 = "";
   }
 }
 
@@ -422,6 +423,7 @@ void disableInt() {
   //irq_set_exclusive_handler(PWM_IRQ_WRAP, pwm_interrupt_handler);
   irq_set_enabled(PWM_IRQ_WRAP, false);
 }
+
 void readSensor() {
   cols = ~gpio_get_all();
 }
@@ -438,119 +440,125 @@ void selectPage() {
     #endif
   }
   if (suma == 1) {
-    cadena += "page1/";
-    selectButton();
+    cadena += "1/";
     //Serial.println("Page 1");
   }
   if (suma == 2) {
-    cadena += "page2/";
-    selectButton();
+    cadena += "2/";
+    //
     //Serial.println("Page 2");
   }
   if (suma == 3) {
-    cadena += "page3/";
-    selectButton();
+    cadena += "3/";
+    //
     //Serial.println("Page 3");
   }
   if (suma == 4) {
-    cadena += "page4/";
-    selectButton();
+    cadena += "4/";
+    //
     //Serial.println("Page 4");
   }
   if (suma == 5) {
-    cadena += "page5/";
-    selectButton();
+    cadena += "5/";
+    //
     //Serial.println("Page 5");
   }
   if (suma == 6) {
-    cadena += "page6/";
-    selectButton();
+    cadena += "6/";
+    //
     //Serial.println("Page 6");
   }
   if (suma == 7) {
-    cadena += "page7/";
-    selectButton();
+    cadena += "7/";
+    //
     //Serial.println("Page 7");
   }
   if (suma == 8) {
-    cadena += "page8/";
-    selectButton();
+    cadena += "8/";
+    //
     //Serial.println("Page 8");
   }
   if (suma == 9) {
-    cadena += "page9/";
-    selectButton();
+    cadena += "9/";
+    //
     //Serial.println("Page 9");
   }
   if (suma == 10) {
-    cadena += "page10/";
-    selectButton();
+    cadena += "10/";
+    //
     //Serial.println("Page 10");
   }
   if (suma == 11) {
-    cadena += "page11/";
-    selectButton();
+    cadena += "11/";
+    //
     //Serial.println("Page 11");
   }
   if (suma == 12) {
-    cadena += "page12/";
-    selectButton();
+    cadena += "12/";
+    //
     //Serial.println("Page 12");
   }
   if (suma == 13) {
-    cadena += "page13/";
-    selectButton();
+    cadena += "13/";
+    //
     //Serial.println("Page 13");
   }
   if (suma == 14) {
-    cadena += "page14/";
-    selectButton();
+    cadena += "14/";
+    //
     //Serial.println("Page 14");
   }
   if (suma == 15) {
-    cadena += "page15/";
-    selectButton();
+    cadena += "15/";
     //Serial.println("Page 15");
   }
-
 }
 
 void selectButton() {
-
+  cadena2 = cadena;
   if (cols & maskBtn(Button0)) {
-    cadena += "1.wav";
+    cadena += "a.wav";
+    cadena2 += "sa.wav";
     //Serial.println("Button 1");
   }
   if (cols & maskBtn(Button1)) {
-    cadena += "2.wav";
+    cadena += "b.wav";
+    cadena2 += "sb.wav";
     //Serial.println("Button 2");
   }
   if (cols & maskBtn(Button2)) {
-    cadena += "3.wav";
+    cadena += "c.wav";
+    cadena2 += "sc.wav";
     //Serial.println("Button 3");
   }
   if (cols & maskBtn(Button3)) {
-    cadena += "4.wav";
+    cadena += "d.wav";
+    cadena2 += "sd.wav";
     //Serial.println("Button 4");
   }
   if (cols & maskBtn(Button4)) {
-    cadena += "5.wav";
+    cadena += "e.wav";
+    cadena2 += "se.wav";
     //Serial.println("Button 5");
   }
   if (cols & maskBtn(Button5)) {
-    cadena += "6.wav";
+    cadena += "f.wav";
+    cadena2 += "sf.wav";
     //Serial.println("Button 6");
   }
   if (cols & maskBtn(Button6)) {
-    cadena += "7.wav";
+    cadena += "g.wav";
+    cadena2 += "sg.wav";
     //Serial.println("Button 7");
   }
   if (cols & maskBtn(Button7)) {
-    cadena += "8.wav";
+    cadena += "h.wav";
+    cadena2 += "sh.wav";
     //Serial.println("Button 8");
   }
   if (cols & maskBtn(Button8)) {
-    cadena += "9.wav";
+    cadena += "i.wav";
+    cadena += "si.wav";
     //Serial.println("Button 9");
   }
 
@@ -567,20 +575,22 @@ void selectButton() {
     Serial.println("Playing...");
 #endif
     readContents(cadena.c_str());
+    delay(100);
+    readContents(cadena2.c_str());
   }
 }
 
 void selecLang() {
   if (cols & maskBtn(LANG)) {
-    cadena = "lang2/";
+    cadena = "LANGA/";
     #ifdef DEBUG
-    Serial.println("lang2");
+    Serial.println("LANGA/");
     #endif
   }
   else {
-    cadena = "lang1/";
+    cadena = "LANGB/";
     #ifdef DEBUG
-    Serial.println("lang1");
+    Serial.println("LANGB/");
     #endif
   }
 }
@@ -588,16 +598,18 @@ void selecLang() {
 void selectwordPhrase() {
 
   if (cols & maskBtn(WORD)) {
-    cadena += "words/";
+    cadena += "w/";
     #ifdef DEBUG
     Serial.println("words");
     #endif
+    selectButton();
   }
   else {
-    cadena += "phrase/";
+    cadena += "p/";
     #ifdef DEBUG
     Serial.println("phrase");
     #endif
+    selectButton();
   }
 }
 
@@ -731,8 +743,8 @@ void loop()
     volumen();
     readSensor();
     selecLang();
-    selectwordPhrase();
     selectPage();
+    selectwordPhrase();
   }
 
 #ifdef DEBUG
