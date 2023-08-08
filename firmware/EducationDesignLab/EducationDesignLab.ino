@@ -618,21 +618,21 @@ void volumen() {
     Serial.print("Setting to Volumen: ");
     #endif
     if (v == 1) {
-      i2cDP.setSteps(32);
+      i2cDP.setSteps(64);
       #ifdef DEBUG
       Serial.print("Medio ");
       Serial.println(v);
       #endif
     }
     if (v == 2) {
-      i2cDP.setSteps(64);
+      i2cDP.setSteps(127);
       #ifdef DEBUG
       Serial.print("Alto ");
       Serial.println(v);
       #endif
     }
     if (v == 3) {
-      i2cDP.setSteps(127);
+      i2cDP.setSteps(32);
       #ifdef DEBUG
       Serial.print("Bajo ");
       Serial.println(v);
@@ -731,8 +731,7 @@ void setup()
   #endif
 
   Wire.begin();
-  Serial.print("Bajo ");
-  i2cDP.setSteps(127);
+  i2cDP.setSteps(32);
   
   #ifdef DEBUG
   Serial.println("Initialization done.");
