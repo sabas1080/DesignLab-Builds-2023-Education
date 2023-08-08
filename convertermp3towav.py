@@ -21,7 +21,7 @@ for file in audio_files:
     
     if ext == ".m4a":
         sound = AudioSegment.from_file(file, format="m4a",duration = 10)
-        sound = sound + 28
+        sound = sound + 10
         #Configure Mono Channel, Frame Rate 11025, 8 bits
         sound = sound.set_channels(1)
         sound = sound.set_frame_rate(11025)
@@ -31,7 +31,7 @@ for file in audio_files:
         file_handle = sound.export("{0}.wav".format(name), format='wav')
     if ext == ".mp3":
         sound = AudioSegment.from_file(file, format="mp3",duration = 10)
-        sound = sound + 28
+        sound = sound + 10
         #Configure Mono Channel, Frame Rate 11025, 8 bits
         sound = sound.set_channels(1)
         sound = sound.set_frame_rate(11025)
