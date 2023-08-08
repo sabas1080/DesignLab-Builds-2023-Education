@@ -574,7 +574,7 @@ void selectButton() {
     Serial.println("Playing...");
 #endif
     readContents(cadena.c_str());
-    delay(100);
+    delay(500);
     readContents(cadena2.c_str());
   }
 }
