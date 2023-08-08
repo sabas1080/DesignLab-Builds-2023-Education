@@ -642,10 +642,6 @@ void volumen() {
     v++;
     cadena = "sys/decide.wav";
     readContents(cadena.c_str());
-    //Serial.println("Setting Resistance to 1800Ohms");
-    //i2cDP.setResistance(10000); //example showing how to pass a desired resistance in
-
-    delay(500);
   }
 }
 
@@ -699,7 +695,6 @@ void setup()
 #ifdef DEBUG
   Serial.print("Starting SD Card");
   Serial.println(BOARD_NAME);
-  Serial.println(RP2040_SD_VERSION);
 
   Serial.print("Initializing SD card with SS = ");  Serial.println(PIN_SD_SS);
   Serial.print("SCK = ");   Serial.println(PIN_SD_SCK);
