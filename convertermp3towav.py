@@ -30,7 +30,7 @@ for file in audio_files:
         # export
         file_handle = sound.export("{0}.wav".format(name), format='wav')
     if ext == ".mp3":
-        sound = AudioSegment.from_file(file, format="mp3",duration = 10)
+        sound = AudioSegment.from_file(file, format="mp3",duration = 5)
         sound = sound + 10
         #Configure Mono Channel, Frame Rate 11025, 8 bits
         sound = sound.set_channels(1)
