@@ -24,7 +24,6 @@
 ***************************************************************************************/
 
 //#define DEBUG
-//#define _RP2040_SD_LOGLEVEL_       4
 
 #if !defined(ARDUINO_ARCH_RP2040)
 #error For RP2040 only
@@ -87,7 +86,8 @@ File f;
 
 #define maskBtn(B) 1<<B
 
-String cadena,cadena2;
+String cadena ="";
+int soundWay = 1;
 
 uint32_t cols;
 
@@ -244,7 +244,6 @@ void pwm_interrupt_handler() {
     disableInt();
     digitalWrite(AMP_EN, LOW);
     cadena = "";
-    cadena2 = "";
   }
 }
 
@@ -513,52 +512,89 @@ void selectPage() {
     //Serial.println("Page 15");
   }
 }
-
+// b   h
+//   c e i
 void selectButton() {
-  cadena2 = cadena;
+
   if (cols & maskBtn(Button0)) {
-    cadena += "a.wav";
-    cadena2 += "sa.wav";
+    if(soundWay == 1){
+      cadena += "a.wav";
+    }
+    if(soundWay ==2){
+     cadena += "sa.wav";
+    }
     //Serial.println("Button 1");
   }
   if (cols & maskBtn(Button1)) {
-    cadena += "b.wav";
-    cadena2 += "sb.wav";
+    if(soundWay == 1){
+      cadena += "b.wav";
+    }
+    if(soundWay == 2){
+      cadena += "sb.wav";
+    }
     //Serial.println("Button 2");
   }
   if (cols & maskBtn(Button2)) {
+    if(soundWay == 1){
     cadena += "c.wav";
-    cadena2 += "sc.wav";
+    }
+    if(soundWay == 2){
+    cadena += "sc.wav";
+    }
     //Serial.println("Button 3");
   }
   if (cols & maskBtn(Button3)) {
+    if(soundWay == 1){
     cadena += "d.wav";
-    cadena2 += "sd.wav";
+    }
+    if(soundWay == 2){
+    cadena += "sd.wav";
+    }
     //Serial.println("Button 4");
   }
   if (cols & maskBtn(Button4)) {
+    if(soundWay == 1){
     cadena += "e.wav";
-    cadena2 += "se.wav";
+    }
+    if(soundWay == 2){
+    cadena += "se.wav";
+    }
     //Serial.println("Button 5");
   }
   if (cols & maskBtn(Button5)) {
+    if(soundWay == 1){
     cadena += "f.wav";
-    cadena2 += "sf.wav";
+    }
+    if(soundWay == 2){
+    cadena += "sf.wav";
+    }
     //Serial.println("Button 6");
   }
   if (cols & maskBtn(Button6)) {
+    if(soundWay == 1){
     cadena += "g.wav";
-    cadena2 += "sg.wav";
+    }
+    if(soundWay == 2){
+    cadena += "sg.wav";
+    }
     //Serial.println("Button 7");
   }
   if (cols & maskBtn(Button7)) {
+    if(soundWay == 1){
     cadena += "h.wav";
-    cadena2 += "sh.wav";
+    }
+    if(soundWay == 2){
+    cadena += "sh.wav";
+    }
     //Serial.println("Button 8");
   }
   if (cols & maskBtn(Button8)) {
+    if(soundWay == 1){
     cadena += "i.wav";
-    cadena2 += "si.wav";
+    }
+    if(soundWay == 2){
+    cadena += "si.wav";
+    }
     //Serial.println("Button 9");
   }
 
@@ -566,16 +602,16 @@ void selectButton() {
   Serial.println("cadena es: ");
   Serial.println(cadena);
 
-  Serial.print("Para Playing: ");
+  Serial.print("Para soundWay: ");
+  Serial.print(soundWay);
 #endif
   if ((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)) || (cols & maskBtn(Button8)))
   {
 #ifdef DEBUG
     Serial.println("Playing...");
 #endif
-    readContents(cadena.c_str());
-    delay(500);
-    readContents(cadena2.c_str());
+      readContents(cadena.c_str());
+      soundWay = 2;
   }
 }
 
@@ -736,13 +772,20 @@ void setup()
 
 void loop()
 {
-  if (wav_position == 0) {
-    volumen();
+  if ((wav_position == 0) && (soundWay == 1)) {
+    volumen(); 
     readSensor();
     selecLang();
     selectPage();
     selectwordPhrase();
   }
+  if ((wav_position == 0) && (soundWay == 2)) {
+    selecLang();
+    selectPage();
+    selectwordPhrase();
+    soundWay = 1;
+  }
+  
 
 #ifdef DEBUG
   delay(500);
