@@ -37,10 +37,10 @@
 #include <SPI.h>
 #include <RP2040_SD.h>
 #include <stdio.h>
-#include "stdlib.h"   // stdlib 
+#include "stdlib.h"   // stdlib
 #include "hardware/irq.h"  // interrupts
-#include "hardware/pwm.h"  // pwm 
-#include "hardware/sync.h" // wait for interrupt 
+#include "hardware/pwm.h"  // pwm
+#include "hardware/sync.h" // wait for interrupt
 #include "hardware/pll.h"
 #include "hardware/clocks.h"
 #include <Wire.h>
@@ -763,7 +763,7 @@ void setup()
 
   Wire.begin();
   i2cDP.setSteps(32);
-  
+
   #ifdef DEBUG
   Serial.println("Initialization done.");
   #endif
@@ -773,7 +773,7 @@ void setup()
 void loop()
 {
   if ((wav_position == 0) && (soundWay == 1)) {
-    volumen(); 
+    volumen();
     readSensor();
     selecLang();
     selectPage();
@@ -785,7 +785,7 @@ void loop()
     selectwordPhrase();
     soundWay = 1;
   }
-  
+
 
 #ifdef DEBUG
   delay(500);
