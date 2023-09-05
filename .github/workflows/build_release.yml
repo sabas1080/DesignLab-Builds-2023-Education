@@ -27,7 +27,7 @@ jobs:
         shell: bash
         run: |
           sudo apt install -y ffmpeg
-          pip3 install -r requirements.txt
+          pip3 install -r requirements.txt pyinstaller
           pyinstaller converterAudio.py
 
       - name: Upload a Build Artifact
@@ -51,7 +51,7 @@ jobs:
       - name: Build dmg
         shell: bash
         run: |
-          sudo pip3 install -r requirements.txt
+          sudo pip3 install -r requirements.txt pyinstaller
           pyinstaller converterAudio.py
 
       - name: Upload a Build Artifact
@@ -83,7 +83,7 @@ jobs:
         shell: powershell
         run: |
           pip3 install pip -U
-          pip3 install -r requirements.txt
+          pip3 install -r requirements.txt pyinstaller
           pyinstaller converterAudio.py
 
       - name: Upload a Build Artifact
