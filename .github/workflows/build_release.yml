@@ -29,6 +29,7 @@ jobs:
           sudo apt install -y ffmpeg
           pip3 install -r requirements.txt pyinstaller
           pyinstaller -wF converterAudio.py
+          pwd
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.1
@@ -53,6 +54,7 @@ jobs:
         run: |
           sudo pip3 install -r requirements.txt pyinstaller
           pyinstaller -wF converterAudio.py
+          pwd
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.1
