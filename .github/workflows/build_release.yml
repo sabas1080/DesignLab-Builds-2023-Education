@@ -35,9 +35,9 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           # Artifact name
-          name: converterAudio.deb  # optional, default is artifact
+          name: converterAudio  # optional, default is artifact
           # A file, directory or wildcard pattern that describes what to upload
-          path: dist/converterAudio.deb
+          path: dist/converterAudio
           # The desired behavior if no files are found using the provided path.
 
   build_dmg:
@@ -60,9 +60,9 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           # Artifact name
-          name: converterAudio.dmg  # optional, default is artifact
+          name: converterAudio  # optional, default is artifact
           # A file, directory or wildcard pattern that describes what to upload
-          path: dist/converterAudio.dmg
+          path: dist/converterAudio
           # The desired behavior if no files are found using the provided path.
 
   build_exe:
@@ -125,7 +125,7 @@ jobs:
       - name: Delete Artifact
         # You may pin to the exact commit or the version.
         # uses: GeekyEggo/delete-artifact@b73cb986740e466292a536d0e32e2666c56fdeb3
-        uses: GeekyEggo/delete-artifact@v2.0.0
+        uses: geekyeggo/delete-artifact@v2
         with:
           name: |
             converterAudio.deb
