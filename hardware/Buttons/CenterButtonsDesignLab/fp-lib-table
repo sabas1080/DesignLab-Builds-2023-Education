@@ -1,4 +1,4 @@
 (fp_lib_table
   (version 7)
-  (lib (name "Design")(type "KiCad")(uri "C:/Users/DELL/OneDrive/Documentos/GitHub/DesignLab-Builds-2023-Education/hardware/DesignLab-Builds-2023-Education.pretty/Design.pretty")(options "")(descr ""))
+  (lib (name "Design")(type "KiCad")(uri "C:/Users/elect/Documents/GitKraken/DesignLab-Builds-2023-Education/hardware/DesignLab-Builds-2023-Education.pretty/Design.pretty")(options "")(descr ""))
 )
