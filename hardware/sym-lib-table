@@ -1,3 +1,5 @@
 (sym_lib_table
+  (version 7)
   (lib (name "EVQ-PLFA08")(type "Legacy")(uri "C:/Users/DELL/Downloads/LIB_EVQ-PLFA08/EVQ-PLFA08/KiCad/EVQ-PLFA08.lib")(options "")(descr ""))
+  (lib (name "Designlab")(type "KiCad")(uri "${KIPRJMOD}/DesignLab-Builds-2023-Education.pretty/Designlab.kicad_sym")(options "")(descr ""))
 )
