@@ -1,5 +1,5 @@
 /****************************************************************************************************************************
-  Andres Sabas @ HackaDay
+  Andres Sabas @ DesignLab
   Original Creation Date: Jan 23, 2023
 
   Development environment specifics:
@@ -25,17 +25,19 @@
 
 //#define DEBUG
 
+//Only RP2040
 #if !defined(ARDUINO_ARCH_RP2040)
 #error For RP2040 only
 #endif
 
+//Define SPI pins for MicroSD
 #define PIN_SD_MOSI       PIN_SPI_MOSI
 #define PIN_SD_MISO       PIN_SPI_MISO
 #define PIN_SD_SCK        PIN_SPI_SCK
 #define PIN_SD_SS         PIN_SPI_SS
 
 #include <SPI.h>
-#include <RP2040_SD.h>
+#include <RP2040_SD.h> // For MicroSD, Library Manager
 #include <stdio.h>
 #include "stdlib.h"   // stdlib
 #include "hardware/irq.h"  // interrupts
@@ -44,22 +46,24 @@
 #include "hardware/pll.h"
 #include "hardware/clocks.h"
 #include <Wire.h>
-#include <SW_MCP4017.h> //https://github.com/SparkysWidgets/SW_MCP4017-Library
+#include <SW_MCP4017.h> //Volume Control, digital pot, https://github.com/SparkysWidgets/SW_MCP4017-Library
 
-uint8_t dpMaxSteps = 128; //remember even thought the the digital pot has 128 steps it looses one on either end (usually cant go all the way to last tick)
+//Config MCP4017
+uint8_t dpMaxSteps = 128; //remember even though the the digital pot has 128 steps it looses one on either end (usually cant go all the way to last tick)
 int maxRangeOhms = 50000; //this is a 50K potentiometer
 MCP4017 i2cDP(MCP4017ADDRESS, dpMaxSteps, maxRangeOhms);
 
-uint8_t v = 1; //volumen
+uint8_t v = 1; //Level volume 1-3
 
 char fname1[64];
 
 File f;
 
-// Audio PIN is to match some of the design guide shields.
-#define AUDIO_PIN 28  // you can change this to whatever you like
-#define AMP_EN 0 //Enable Ampli
+// Audio pins
+#define AUDIO_PIN 28  //Output audio
+#define AMP_EN 0 //Enable Ampli, ON/OFF Ampli
 
+//Buttons
 #define Button0 8
 #define Button1 7
 #define Button2 2
@@ -76,17 +80,21 @@ File f;
 #define LANG 27
 #define WORD 26
 
+//Sensors page
 #define S1 14
 #define S2 6
 #define S3 21
 #define S4 24
 
+//Detect MicroSD
 #define CD 15
+
+//Internal LED
 #define LED 25
 
 #define maskBtn(B) 1<<B
 
-String cadena ="";
+String path ="";
 int soundWay = 1;
 
 uint32_t cols;
@@ -243,7 +251,7 @@ void pwm_interrupt_handler() {
     wav_position = 0;
     disableInt();
     digitalWrite(AMP_EN, LOW);
-    cadena = "";
+    path = "";
   }
 }
 
@@ -407,7 +415,7 @@ void enableInt() {
 
   pwm_config_set_clkdiv(&config, 8.0f);
   pwm_config_set_wrap(&config, 250);
-  pwm_init(audio_pin_slice, &config, true);
+  //testing
   pwm_init(audio_pin_slice,pwm_gpio_to_channel(AUDIO_PIN),&config, true);
 
   pwm_set_gpio_level(AUDIO_PIN, 0);
@@ -429,181 +437,181 @@ void readSensor() {
 }
 
 void selectPage() {
-  uint8_t suma = ((cols & maskBtn(S1)) >> 14) + ((cols & maskBtn(S2)) >> 5) + ((cols & maskBtn(S3)) >> 19) + ((cols & maskBtn(S4)) >> 21);
+  uint8_t pageNumber = ((cols & maskBtn(S1)) >> 14) + ((cols & maskBtn(S2)) >> 5) + ((cols & maskBtn(S3)) >> 19) + ((cols & maskBtn(S4)) >> 21);
 #ifdef DEBUG
-  Serial.print("suma es: ");
-  Serial.println(suma);
+  Serial.print("pageNumber is: ");
+  Serial.println(pageNumber);
 #endif
-  if (suma == 0) {
+  if (pageNumber == 0) {
     #ifdef DEBUG
-    Serial.println("Page not Found");
+    Serial.println("Flashcard not Found");
     #endif
   }
-  if (suma == 1) {
-    cadena += "1/";
+  if (pageNumber == 1) {
+    path += "1/";
     //Serial.println("Page 1");
   }
-  if (suma == 2) {
-    cadena += "2/";
+  if (pageNumber == 2) {
+    path += "2/";
     //
     //Serial.println("Page 2");
   }
-  if (suma == 3) {
-    cadena += "3/";
+  if (pageNumber == 3) {
+    path += "3/";
     //
     //Serial.println("Page 3");
   }
-  if (suma == 4) {
-    cadena += "4/";
+  if (pageNumber == 4) {
+    path += "4/";
     //
     //Serial.println("Page 4");
   }
-  if (suma == 5) {
-    cadena += "5/";
+  if (pageNumber == 5) {
+    path += "5/";
     //
     //Serial.println("Page 5");
   }
-  if (suma == 6) {
-    cadena += "6/";
+  if (pageNumber == 6) {
+    path += "6/";
     //
     //Serial.println("Page 6");
   }
-  if (suma == 7) {
-    cadena += "7/";
+  if (pageNumber == 7) {
+    path += "7/";
     //
     //Serial.println("Page 7");
   }
-  if (suma == 8) {
-    cadena += "8/";
+  if (pageNumber == 8) {
+    path += "8/";
     //
     //Serial.println("Page 8");
   }
-  if (suma == 9) {
-    cadena += "9/";
+  if (pageNumber == 9) {
+    path += "9/";
     //
     //Serial.println("Page 9");
   }
-  if (suma == 10) {
-    cadena += "10/";
+  if (pageNumber == 10) {
+    path += "10/";
     //
     //Serial.println("Page 10");
   }
-  if (suma == 11) {
-    cadena += "11/";
+  if (pageNumber == 11) {
+    path += "11/";
     //
     //Serial.println("Page 11");
   }
-  if (suma == 12) {
-    cadena += "12/";
+  if (pageNumber == 12) {
+    path += "12/";
     //
     //Serial.println("Page 12");
   }
-  if (suma == 13) {
-    cadena += "13/";
+  if (pageNumber == 13) {
+    path += "13/";
     //
     //Serial.println("Page 13");
   }
-  if (suma == 14) {
-    cadena += "14/";
+  if (pageNumber == 14) {
+    path += "14/";
     //
     //Serial.println("Page 14");
   }
-  if (suma == 15) {
-    cadena += "15/";
+  if (pageNumber == 15) {
+    path += "15/";
     //Serial.println("Page 15");
   }
 }
-// b   h
-//   c e i
+
+//
 void selectButton() {
 
   if (cols & maskBtn(Button0)) {
     if(soundWay == 1){
-      cadena += "a.wav";
+      path += "a.wav";
     }
     if(soundWay ==2){
-     cadena += "sa.wav";
+     path += "sa.wav";
     }
     //Serial.println("Button 1");
   }
   if (cols & maskBtn(Button1)) {
     if(soundWay == 1){
-      cadena += "b.wav";
+      path += "b.wav";
     }
     if(soundWay == 2){
-      cadena += "sb.wav";
+      path += "sb.wav";
     }
     //Serial.println("Button 2");
   }
   if (cols & maskBtn(Button2)) {
     if(soundWay == 1){
-    cadena += "c.wav";
+    path += "c.wav";
     }
     if(soundWay == 2){
-    cadena += "sc.wav";
+    path += "sc.wav";
     }
     //Serial.println("Button 3");
   }
   if (cols & maskBtn(Button3)) {
     if(soundWay == 1){
-    cadena += "d.wav";
+    path += "d.wav";
     }
     if(soundWay == 2){
-    cadena += "sd.wav";
+    path += "sd.wav";
     }
     //Serial.println("Button 4");
   }
   if (cols & maskBtn(Button4)) {
     if(soundWay == 1){
-    cadena += "e.wav";
+    path += "e.wav";
     }
     if(soundWay == 2){
-    cadena += "se.wav";
+    path += "se.wav";
     }
     //Serial.println("Button 5");
   }
   if (cols & maskBtn(Button5)) {
     if(soundWay == 1){
-    cadena += "f.wav";
+    path += "f.wav";
     }
     if(soundWay == 2){
-    cadena += "sf.wav";
+    path += "sf.wav";
     }
     //Serial.println("Button 6");
   }
   if (cols & maskBtn(Button6)) {
     if(soundWay == 1){
-    cadena += "g.wav";
+    path += "g.wav";
     }
     if(soundWay == 2){
-    cadena += "sg.wav";
+    path += "sg.wav";
     }
     //Serial.println("Button 7");
   }
   if (cols & maskBtn(Button7)) {
     if(soundWay == 1){
-    cadena += "h.wav";
+    path += "h.wav";
     }
     if(soundWay == 2){
-    cadena += "sh.wav";
+    path += "sh.wav";
     }
     //Serial.println("Button 8");
   }
   if (cols & maskBtn(Button8)) {
     if(soundWay == 1){
-    cadena += "i.wav";
+    path += "i.wav";
     }
     if(soundWay == 2){
-    cadena += "si.wav";
+    path += "si.wav";
     }
     //Serial.println("Button 9");
   }
 
 #ifdef DEBUG
-  Serial.println("cadena es: ");
-  Serial.println(cadena);
+  Serial.println("Path is: ");
+  Serial.println(path);
 
-  Serial.print("Para soundWay: ");
+  Serial.print("SoundWay: ");
   Serial.print(soundWay);
 #endif
   if ((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)) || (cols & maskBtn(Button8)))
@@ -611,20 +619,20 @@ void selectButton() {
 #ifdef DEBUG
     Serial.println("Playing...");
 #endif
-      readContents(cadena.c_str());
+      readContents(path.c_str());
       soundWay = 2;
   }
 }
 
 void selecLang() {
   if (cols & maskBtn(LANG)) {
-    cadena = "LANGA/";
+    path = "LANGA/";
     #ifdef DEBUG
     Serial.println("LANGA/");
     #endif
   }
   else {
-    cadena = "LANGB/";
+    path = "LANGB/";
     #ifdef DEBUG
     Serial.println("LANGB/");
     #endif
@@ -634,14 +642,14 @@ void selecLang() {
 void selectwordPhrase() {
 
   if (cols & maskBtn(WORD)) {
-    cadena += "w/";
+    path += "w/";
     #ifdef DEBUG
     Serial.println("words");
     #endif
     selectButton();
   }
   else {
-    cadena += "p/";
+    path += "p/";
     #ifdef DEBUG
     Serial.println("phrase");
     #endif
@@ -649,39 +657,40 @@ void selectwordPhrase() {
   }
 }
 
-void volumen() {
+void volume() {
   if (cols & maskBtn(VOL)) {
     #ifdef DEBUG
-    Serial.print("Setting to Volumen: ");
+    Serial.print("Setting to volume: ");
     #endif
     if (v == 1) {
       i2cDP.setSteps(64);
       #ifdef DEBUG
-      Serial.print("Medio ");
+      Serial.print("Medium ");
       Serial.println(v);
       #endif
     }
     if (v == 2) {
       i2cDP.setSteps(127);
       #ifdef DEBUG
-      Serial.print("Alto ");
+      Serial.print("High ");
       Serial.println(v);
       #endif
     }
     if (v == 3) {
       i2cDP.setSteps(32);
       #ifdef DEBUG
-      Serial.print("Bajo ");
+      Serial.print("Low ");
       Serial.println(v);
       #endif
       v = 0;
     }
     v++;
-    cadena = "sys/decide.wav";
-    readContents(cadena.c_str());
+    path = "sys/decide.wav";
+    readContents(path.c_str());
   }
 }
 
+//blink with pin, time and times
 void blink(int pin, int msdelay, int times) {
   for (int i = 0; i < times; i++) {
     digitalWrite(pin, HIGH);
@@ -695,9 +704,10 @@ void setup()
 {
   set_sys_clock_khz(176000, true);
 
-  pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(AMP_EN, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT); // LED OUTPUT
+  pinMode(AMP_EN, OUTPUT); // ENABLE AMPLI OUTPUT
 
+  // ALL PINPUT PULLUP
   pinMode(Button0, INPUT_PULLUP);
   pinMode(Button1, INPUT_PULLUP);
   pinMode(Button2, INPUT_PULLUP);
@@ -708,6 +718,7 @@ void setup()
   pinMode(Button7, INPUT_PULLUP);
   pinMode(Button8, INPUT_PULLUP);
 
+  // Sensor INPUT
   pinMode(S1, INPUT);
   pinMode(S2, INPUT);
   pinMode(S3, INPUT);
@@ -726,7 +737,7 @@ void setup()
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
 #ifdef DEBUG
-  while (!Serial);
+  while (!Serial); //Must open Serial first
 #endif
 
 #ifdef DEBUG
@@ -739,7 +750,7 @@ void setup()
   Serial.print("MISO = ");  Serial.println(PIN_SD_MISO);
 #endif
 
-  digitalWrite(AMP_EN, LOW);
+  digitalWrite(AMP_EN, LOW); // Disable Ampli
 
   if (!cols & maskBtn(CD)) {
     Serial.println("No Insert SD Card");
@@ -756,7 +767,7 @@ void setup()
     }
   }
 
-  f = SD.open("/");
+  f = SD.open("/");// Open SD
 
   #ifdef DEBUG
   printDirectory(f, 0);
@@ -774,8 +785,8 @@ void setup()
 void loop()
 {
   if ((wav_position == 0) && (soundWay == 1)) {
-    volumen();
     readSensor();
+    volume();
     selecLang();
     selectPage();
     selectwordPhrase();
