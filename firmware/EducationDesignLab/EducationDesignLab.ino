@@ -44,7 +44,7 @@
 #include "hardware/pll.h"
 #include "hardware/clocks.h"
 #include <Wire.h>
-#include <SW_MCP4017.h>
+#include <SW_MCP4017.h> //https://github.com/SparkysWidgets/SW_MCP4017-Library
 
 uint8_t dpMaxSteps = 128; //remember even thought the the digital pot has 128 steps it looses one on either end (usually cant go all the way to last tick)
 int maxRangeOhms = 50000; //this is a 50K potentiometer
@@ -408,6 +408,7 @@ void enableInt() {
   pwm_config_set_clkdiv(&config, 8.0f);
   pwm_config_set_wrap(&config, 250);
   pwm_init(audio_pin_slice, &config, true);
+  pwm_init(audio_pin_slice,pwm_gpio_to_channel(AUDIO_PIN),&config, true);
 
   pwm_set_gpio_level(AUDIO_PIN, 0);
 }
