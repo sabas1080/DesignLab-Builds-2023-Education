@@ -64,15 +64,16 @@ File f;
 #define AMP_EN 0 //Enable Ampli, ON/OFF Ampli
 
 //Buttons
-#define Button0 8
-#define Button1 7
-#define Button2 2
-#define Button3 11
-#define Button4 10
-#define Button5 9
-#define Button6 20
-#define Button7 13
-#define Button8 12
+#define Button1 8
+#define Button2 7
+#define Button3 2
+#define Button4 29
+#define Button5 11
+#define Button6 10
+#define Button7 9
+#define Button8 20
+#define Button9 13
+#define Button10 12
 
 #define VOL 1
 #define REC 3
@@ -524,87 +525,95 @@ void selectPage() {
 
 //
 void selectButton() {
-
-  if (cols & maskBtn(Button0)) {
+  if (cols & maskBtn(Button1)) {
     if(soundWay == 1){
       path += "a.wav";
     }
     if(soundWay ==2){
      path += "sa.wav";
     }
-    //Serial.println("Button 1");
+    Serial.println("Button 1");
   }
-  if (cols & maskBtn(Button1)) {
+  if (cols & maskBtn(Button2)) {
     if(soundWay == 1){
       path += "b.wav";
     }
     if(soundWay == 2){
       path += "sb.wav";
     }
-    //Serial.println("Button 2");
+    Serial.println("Button 2");
   }
-  if (cols & maskBtn(Button2)) {
+  if (cols & maskBtn(Button3)) {
     if(soundWay == 1){
     path += "c.wav";
     }
     if(soundWay == 2){
     path += "sc.wav";
     }
-    //Serial.println("Button 3");
+    Serial.println("Button 3");
   }
-  if (cols & maskBtn(Button3)) {
+  if (cols & maskBtn(Button4)) {
     if(soundWay == 1){
     path += "d.wav";
     }
     if(soundWay == 2){
     path += "sd.wav";
     }
-    //Serial.println("Button 4");
+    Serial.println("Button 4");
   }
-  if (cols & maskBtn(Button4)) {
+  if (cols & maskBtn(Button5)) {
     if(soundWay == 1){
     path += "e.wav";
     }
     if(soundWay == 2){
     path += "se.wav";
     }
-    //Serial.println("Button 5");
+    Serial.println("Button 5");
   }
-  if (cols & maskBtn(Button5)) {
+  if (cols & maskBtn(Button6)) {
     if(soundWay == 1){
     path += "f.wav";
     }
     if(soundWay == 2){
     path += "sf.wav";
     }
-    //Serial.println("Button 6");
+    Serial.println("Button 6");
   }
-  if (cols & maskBtn(Button6)) {
+  if (cols & maskBtn(Button7)) {
     if(soundWay == 1){
     path += "g.wav";
     }
     if(soundWay == 2){
     path += "sg.wav";
     }
-    //Serial.println("Button 7");
+    Serial.println("Button 7");
   }
-  if (cols & maskBtn(Button7)) {
+  if (cols & maskBtn(Button8)) {
     if(soundWay == 1){
     path += "h.wav";
     }
     if(soundWay == 2){
     path += "sh.wav";
     }
-    //Serial.println("Button 8");
+    Serial.println("Button 8");
   }
-  if (cols & maskBtn(Button8)) {
+  if (cols & maskBtn(Button9)) {
     if(soundWay == 1){
     path += "i.wav";
     }
     if(soundWay == 2){
     path += "si.wav";
     }
-    //Serial.println("Button 9");
+    Serial.println("Button 9");
+  }
+  if (cols & maskBtn(Button10)) {
+    if(soundWay == 1){
+    path += "j.wav";
+    }
+    if(soundWay == 2){
+    path += "sj.wav";
+    }
+    Serial.println("Button 10");
   }
 
 #ifdef DEBUG
@@ -614,7 +623,7 @@ void selectButton() {
   Serial.print("SoundWay: ");
   Serial.print(soundWay);
 #endif
-  if ((cols & maskBtn(Button0)) || (cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)) || (cols & maskBtn(Button8)))
+  if ((cols & maskBtn(Button1)) || (cols & maskBtn(Button2)) || (cols & maskBtn(Button3)) || (cols & maskBtn(Button4)) || (cols & maskBtn(Button5)) || (cols & maskBtn(Button6)) || (cols & maskBtn(Button7)) || (cols & maskBtn(Button8)) || (cols & maskBtn(Button9)) || (cols & maskBtn(Button10)))
   {
 #ifdef DEBUG
     Serial.println("Playing...");
@@ -708,7 +717,6 @@ void setup()
   pinMode(AMP_EN, OUTPUT); // ENABLE AMPLI OUTPUT
 
   // ALL PINPUT PULLUP
-  pinMode(Button0, INPUT_PULLUP);
   pinMode(Button1, INPUT_PULLUP);
   pinMode(Button2, INPUT_PULLUP);
   pinMode(Button3, INPUT_PULLUP);
@@ -717,6 +725,8 @@ void setup()
   pinMode(Button6, INPUT_PULLUP);
   pinMode(Button7, INPUT_PULLUP);
   pinMode(Button8, INPUT_PULLUP);
+  pinMode(Button9, INPUT_PULLUP);
+  pinMode(Button10, INPUT_PULLUP);
 
   // Sensor INPUT
   pinMode(S1, INPUT);
